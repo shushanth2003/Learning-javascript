@@ -442,3 +442,97 @@ global() Lexical Env
 | Scope Chain         | The lookup path JS follows to resolve variables |
 
 ---
+
+## ✅ `let` & `const` in JavaScript
+
+They are modern ways to declare variables (introduced in ES6).
+They are **block-scoped** and **not hoisted like `var`** (at least not the same way).
+
+---
+
+### 🚫 Temporal Dead Zone (TDZ)
+
+> The **TDZ** is the time between when a variable is **hoisted** and when it is **initialized**.
+
+During TDZ:
+
+* You **can’t access** the variable
+* If you try → ❌ **ReferenceError**
+
+---
+
+### 🔍 Example of TDZ:
+
+```js
+console.log(name);  // ❌ ReferenceError
+let name = "Shushanth";
+```
+
+* `name` is hoisted **without initialization**
+* It’s in the **Temporal Dead Zone** until this line: `let name = "Shushanth"`
+
+---
+
+## 🆚 Difference Between `var`, `let`, and `const`
+
+| Feature       | `var`                              | `let`                     | `const`                   |
+| ------------- | ---------------------------------- | ------------------------- | ------------------------- |
+| Scope         | Function-scoped                    | Block-scoped              | Block-scoped              |
+| Re-declare    | ✅ Allowed                          | ❌ Not allowed             | ❌ Not allowed             |
+| Re-assign     | ✅ Allowed                          | ✅ Allowed                 | ❌ Not allowed             |
+| Hoisted       | ✅ Yes (initialized to `undefined`) | ✅ Yes (but in TDZ)        | ✅ Yes (but in TDZ)        |
+| Default Value | `undefined`                        | ❌ Error if accessed early | ❌ Error if accessed early |
+
+---
+
+### 🧠 Behind the Scenes (Memory Phase):
+
+```js
+// Memory Allocation Phase:
+var a = undefined;
+let b;   // In TDZ
+const c; // In TDZ
+
+// Execution Phase:
+a = 10;
+b = 20;
+c = 30;
+```
+
+---
+
+## 🔥 Types of Errors You Might See
+
+| Error Type       | When it Happens                             |
+| ---------------- | ------------------------------------------- |
+| ❌ ReferenceError | Accessing variable in TDZ or undeclared var |
+| ❌ TypeError      | Trying to reassign a `const`                |
+| ❌ SyntaxError    | Bad syntax (e.g., missing brackets, etc.)   |
+
+---
+
+### ✅ Example:
+
+```js
+console.log(x);   // ❌ ReferenceError
+let x = 5;
+
+const y;          // ❌ SyntaxError (const must be initialized)
+y = 10;
+
+const z = 10;
+z = 20;           // ❌ TypeError (can't change const)
+```
+
+---
+
+## 💬 Summary:
+
+* `let` & `const` are hoisted, but live in a **"Temporal Dead Zone"**
+* They **cannot be used** before their declaration
+* This helps **prevent bugs** and makes code **safer**
+
+---
+
+
+
