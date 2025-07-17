@@ -351,3 +351,94 @@ console.log(window.name); // Shushanth
 | Global variables | `var` attaches to `window`, `let` & `const` do not |
 
 ---
+You're on 🔥 fire, Shushanth!
+Now let’s break down this super important topic in a **short, sweet, and clear** way:
+
+---
+
+## 🔍 Scope, Lexical Environment & Scope Chain in JavaScript
+
+These concepts are **key** to how variables are accessed in JS — and they're 🔥 hot in interviews too!
+
+---
+
+### ✅ 1. **Scope** – Where a variable is accessible
+
+> **Scope** determines where in your code a variable can be used.
+
+* **Global Scope** – Accessible anywhere
+* **Function Scope** – Only accessible inside a function
+* **Block Scope** – `let` & `const` inside `{}`
+
+---
+
+### ✅ 2. **Lexical Environment**
+
+> A Lexical Environment is created every time a function runs. It contains:
+
+* **Local memory** (variables + functions defined inside)
+* A reference to the **outer lexical environment**
+
+---
+
+### ✅ 3. **Scope Chain**
+
+> The **Scope Chain** is the chain of lexical environments JS follows to **find a variable**.
+
+When you access a variable:
+
+1. JS looks in the **current scope**
+2. If not found, it **goes up** the outer environment
+3. Continues until it reaches **global scope**
+
+---
+
+### 🔁 Example:
+
+```js
+function outer() {
+  let a = 10;
+
+  function inner() {
+    let b = 20;
+    console.log(a + b); // ✅ a is found in outer scope
+  }
+
+  inner();
+}
+
+outer();
+```
+
+🔗 **Scope Chain here:**
+
+* `inner()` tries to find `a`
+* It’s not in `inner()` → so it goes up to `outer()` and finds it there
+
+---
+
+## 🧠 Visual (Simplified)
+
+```
+inner() Lexical Env
+├── b = 20
+├── Reference → outer()
+
+outer() Lexical Env
+├── a = 10
+├── Reference → global()
+
+global() Lexical Env
+```
+
+---
+
+## ✅ Summary:
+
+| Term                | Meaning                                         |
+| ------------------- | ----------------------------------------------- |
+| Scope               | Where a variable is accessible                  |
+| Lexical Environment | Local memory + reference to outer env           |
+| Scope Chain         | The lookup path JS follows to resolve variables |
+
+---
