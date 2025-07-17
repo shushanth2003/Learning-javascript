@@ -534,5 +534,87 @@ z = 20;           // ❌ TypeError (can't change const)
 
 ---
 
+## 🧱 What is a Block in JavaScript?
 
+> A **block** is anything inside `{ }`
+> It can be used in:
 
+* `if` / `else`
+* `for` / `while`
+* `function` body
+* Plain `{ }` for grouping
+
+```js
+{
+  // block
+}
+```
+
+---
+
+## 🧠 What is Block Scope?
+
+> **Variables declared with `let` and `const` inside a block** are only accessible **inside that block**.
+
+```js
+{
+  let a = 10;
+  console.log(a); // ✅ Works
+}
+console.log(a); // ❌ ReferenceError (a is block-scoped)
+```
+
+* `var` is NOT block-scoped (it is function-scoped)
+
+---
+
+## 🪞 What is Shadowing?
+
+> **Shadowing** happens when a variable declared inside a block has the **same name** as a variable in an outer scope.
+
+```js
+let a = "outer";
+
+{
+  let a = "inner"; // ⬅️ shadows the outer 'a'
+  console.log(a);  // inner
+}
+
+console.log(a);    // outer
+```
+
+✅ This is **legal shadowing** — and **common in real apps**.
+
+---
+
+## 🚫 What is Illegal Shadowing?
+
+> When you try to declare a `let` or `const` variable **inside a block**, **while an outer scope already has a `var`** with the same name.
+
+```js
+var x = 10;
+
+{
+  let x = 20;  // ❌ Illegal Shadowing in strict mode
+  console.log(x);
+}
+```
+
+* `var` is hoisted to function/global scope
+* You **can't safely shadow** it using `let` or `const`
+* This throws an error in **strict mode**
+
+✅ Safe option: **Avoid using `var`** — use only `let`/`const`
+
+---
+
+## 📋 Summary:
+
+| Concept           | Explained                                      |
+| ----------------- | ---------------------------------------------- |
+| Block Scope       | `let`/`const` visible only inside `{ }`        |
+| Shadowing         | Inner variable hides outer with same name      |
+| Legal Shadowing   | `let`/`const` shadowing outer `let`/`const`    |
+| Illegal Shadowing | `let`/`const` shadowing outer `var` (⚠️ error) |
+
+---
