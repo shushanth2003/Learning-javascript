@@ -283,3 +283,71 @@ global()
 ```
 
 ---
+## ✅ The **Shortest JavaScript Program** is:
+
+```js
+// empty file
+```
+
+Yes! Even an **empty file** is a valid JavaScript program.
+
+---
+
+### 🚀 What Happens Behind the Scenes?
+
+When this empty file runs in the **browser**, JavaScript engine still creates:
+
+1. **Global Execution Context**
+2. **Global Object** → In the browser, it's called `window`
+3. **this keyword** → Points to `window` in global scope
+
+---
+
+## 🪟 `window` – The Global Object in Browser
+
+In a browser:
+
+```js
+console.log(window);
+```
+
+* It's an object created by the JS engine.
+* It holds:
+
+  * All global functions (`alert()`, `setTimeout()`, etc.)
+  * All global variables
+  * Browser APIs
+
+---
+
+## 🔑 `this` in Global Scope
+
+In global scope:
+
+```js
+console.log(this);      // Points to window
+console.log(this === window); // true ✅
+```
+
+So, any global variable you declare like:
+
+```js
+var name = "Shushanth";
+console.log(window.name); // Shushanth
+```
+
+> Declaring with `var` adds it to the window object.
+> But `let` and `const` DO NOT attach to window.
+
+---
+
+### 🧠 Summary:
+
+| Concept          | Meaning                                            |
+| ---------------- | -------------------------------------------------- |
+| Shortest JS Code | Empty file – still creates global context          |
+| Global Object    | In browsers → `window`                             |
+| `this` in global | Refers to `window` object                          |
+| Global variables | `var` attaches to `window`, `let` & `const` do not |
+
+---
