@@ -716,3 +716,206 @@ const sayHi = greet("Shushanth");
 sayHi();
 ```
 ---
+
+## ❓The Interview Question (Classic)
+
+### 👇 What will be the output?
+
+```js
+for (var i = 1; i <= 5; i++) {
+  setTimeout(function () {
+    console.log(i);
+  }, i * 1000);
+}
+```
+
+---
+
+### ❗ Most people say:
+
+```
+1
+2
+3
+4
+5
+```
+
+But the **actual output is**:
+
+```
+6
+6
+6
+6
+6
+```
+
+---
+
+## 🧠 Why does this happen?
+
+### 🔍 Because of two reasons:
+
+1. `var` is **function scoped**, NOT block scoped
+2. All 5 `setTimeout` callbacks **share the same `i`**
+
+By the time the `setTimeout` runs, the loop is done, and `i` becomes `6`.
+So all of them log `6`.
+
+---
+
+## ✅ How to Fix It?
+
+### ✅ **Solution 1: Use `let` instead of `var`**
+
+```js
+for (let i = 1; i <= 5; i++) {
+  setTimeout(function () {
+    console.log(i);
+  }, i * 1000);
+}
+```
+
+Output:
+
+```
+1
+2
+3
+4
+5
+```
+
+✅ Why this works:
+`let` creates a new block-scoped `i` for each iteration.
+
+---
+
+### ✅ **Solution 2: Use Closures (IIFE)**
+
+```js
+for (var i = 1; i <= 5; i++) {
+  (function (j) {
+    setTimeout(function () {
+      console.log(j);
+    }, j * 1000);
+  })(i);
+}
+```
+
+* This uses an **Immediately Invoked Function Expression (IIFE)** to capture the value of `i` in `j` for each loop.
+
+Output:
+
+```
+1
+2
+3
+4
+5
+```
+
+---
+
+## ✅ 1. **What are First-Class Functions?**
+
+> In JavaScript, **functions are treated like variables**.
+
+This means you can:
+
+* **Assign** functions to variables
+* **Pass** functions as arguments
+* **Return** functions from other functions
+
+📌 **This is called: First-Class Functions**
+
+```js
+function greet() {
+  return "Hello!";
+}
+
+const sayHi = greet;         // ✅ assign
+console.log(sayHi());        // ✅ call through variable
+
+function executor(fn) {      // ✅ pass function as argument
+  return fn();
+}
+
+console.log(executor(greet)); // "Hello!"
+```
+
+---
+
+## ✅ 2. **Anonymous Functions**
+
+> A function **without a name**
+
+Used mostly in:
+
+* **Function expressions**
+* **Callbacks**
+
+```js
+setTimeout(function () {
+  console.log("I’m anonymous!");
+}, 1000);
+```
+
+---
+
+## ✅ 3. **Function Statement vs Function Expression**
+
+### ✅ Function Statement (Declaration):
+
+```js
+function greet() {
+  console.log("Hello");
+}
+```
+
+* **Hoisted** (can be called before it's defined)
+
+### ✅ Function Expression:
+
+```js
+const greet = function () {
+  console.log("Hi");
+};
+```
+
+* **Not hoisted** (cannot call before definition)
+
+---
+
+## ✅ 4. **Function Parameter vs Argument**
+
+| Term          | Meaning                             |
+| ------------- | ----------------------------------- |
+| **Parameter** | The **name** in function definition |
+| **Argument**  | The **actual value** you pass       |
+
+```js
+function greet(name) {  // 'name' is a parameter
+  console.log("Hi " + name);
+}
+
+greet("Shushanth");     // 'Shushanth' is an argument
+```
+
+---
+
+### 🧠 Summary (Interview Friendly):
+
+| Term                  | Meaning                                 |
+| --------------------- | --------------------------------------- |
+| First-Class Functions | Functions can be treated like variables |
+| Anonymous Function    | Function without a name                 |
+| Function Statement    | Declared with `function`, hoisted       |
+| Function Expression   | Assigned to variable, not hoisted       |
+| Parameter             | Variable in function definition         |
+| Argument              | Actual value passed                     |
+
+---
+
+
