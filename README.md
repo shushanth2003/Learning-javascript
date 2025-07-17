@@ -30,14 +30,6 @@ It runs **in the browser** (like Chrome, Firefox) and can also run on the server
 
 > JavaScript makes websites **come alive** by allowing **logic, interaction, and dynamic content.**
 
-Sure, Shushanth! Here’s the **short and sweet theory** of **function scope** in JavaScript:
-
----
-
-Absolutely, Shushanth! Here's a **short and sweet explanation** of **how JavaScript works** and **Execution Context** 🔥
-
----
-
 ## 🔧 How JavaScript Works (Behind the Scenes)
 
 JavaScript runs inside a **JavaScript Engine** (like V8 in Chrome). It follows this process:
