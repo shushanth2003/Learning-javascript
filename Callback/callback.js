@@ -6,3 +6,4 @@ function sayHi(){
 }
 sayHi();
 //calling the function in callback formation
+//calling the function in call back formation
