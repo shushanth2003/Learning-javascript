@@ -1,9 +1,10 @@
-function greet(){
-    console.log("Sayhi");
+function askUser(name,callback){
+    console.log(name);
+    callback();
 }
-function sayHi(){
-    greet();
+function callback(){
+    console.log("Hi Shushanth");
 }
-sayHi();
+askUser("Shushanth",callback);
 //calling the function in callback formation
 //calling the function in call back formation
