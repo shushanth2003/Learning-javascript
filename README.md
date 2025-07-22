@@ -1401,3 +1401,48 @@ console.log(result); // 24
 
 ---
 
+## 🔥 EP-01: Callback Hell & Inversion of Control
+
+## 😖 Callback Hell
+
+When **callbacks are nested inside callbacks**, making the code:
+
+* Hard to read
+* Hard to debug
+* Hard to maintain
+
+```js
+loginUser("shushanth", () => {
+  getUserData(() => {
+    getPosts(() => {
+      getComments(() => {
+        console.log("All Done!");
+      });
+    });
+  });
+});
+```
+
+This **pyramid shape** is called **Callback Hell**.
+
+---
+
+## ❌ Inversion of Control
+
+When you give control to another function via a callback, you **lose control** of:
+
+* When it runs
+* How many times it runs
+* What arguments it gets
+
+This leads to bugs if the **caller misbehaves**.
+
+---
+
+## ✅ Solution?
+
+* Use **Promises** to flatten the structure.
+* Then use **`async/await`** for clean async code.
+
+---
+
