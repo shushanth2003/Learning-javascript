@@ -1521,3 +1521,79 @@ promise
 
 ---
 
+## ✅ EP-03: Creating a Promise, Chaining, and Error Handling
+
+---
+
+### 🔨 Creating a Promise
+
+```js
+const myPromise = new Promise((resolve, reject) => {
+  let success = true;
+
+  setTimeout(() => {
+    if (success) {
+      resolve("✅ Data fetched");
+    } else {
+      reject("❌ Fetch failed");
+    }
+  }, 1000);
+});
+```
+
+* `resolve()` = success
+* `reject()` = error
+* `setTimeout()` = simulating async delay
+
+---
+
+### 🔗 Promise Chaining
+
+Use `.then()` to chain logic step by step:
+
+```js
+myPromise
+  .then((data) => {
+    console.log(data);            // ✅ Data fetched
+    return data + " → Step 2";
+  })
+  .then((step2) => {
+    console.log(step2);           // ✅ Data fetched → Step 2
+    return "✅ All done!";
+  })
+  .then(console.log);             // ✅ All done!
+```
+
+✅ Each `.then()` returns a **new Promise** — enabling **chaining**.
+
+---
+
+### ❗ Error Handling with `.catch()`
+
+```js
+myPromise
+  .then((data) => {
+    console.log(data);
+    throw new Error("Something broke"); // simulating error
+  })
+  .catch((err) => {
+    console.log("Caught error:", err.message);
+  });
+```
+
+* Any error in `.then()` is caught in `.catch()`
+* Use `.catch()` once at the end to handle **any error in the chain**
+
+---
+
+### 🧠 Summary
+
+| Feature         | What it Does                      |
+| --------------- | --------------------------------- |
+| `new Promise()` | Create custom async logic         |
+| `.then()`       | Handle success & return next step |
+| `.catch()`      | Catch any error in the chain      |
+| Chaining        | Cleanly run multiple async steps  |
+
+---
+
