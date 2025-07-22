@@ -918,4 +918,197 @@ greet("Shushanth");     // 'Shushanth' is an argument
 
 ---
 
+### ✅ What is a Callback Function?
 
+> A **callback** is a function passed **as an argument** to another function, to be **called later**.
+
+```js
+function greet(name, callback) {
+  console.log("Hello", name);
+  callback(); // call later
+}
+
+function sayBye() {
+  console.log("Bye!");
+}
+
+greet("Shushanth", sayBye);
+```
+
+* `sayBye` is a **callback function** passed to `greet`.
+
+---
+
+### ✅ Where are Callbacks used?
+
+* **setTimeout**, **setInterval**
+* **Event Listeners**
+* **APIs**, **AJAX**, **Promises**
+* **Functional programming** (e.g. `map`, `filter`)
+
+---
+
+### ✅ Callback in Event Listeners
+
+```js
+document.getElementById("btn").addEventListener("click", function () {
+  console.log("Button Clicked 🚀");
+});
+```
+
+* The function inside `addEventListener` is a **callback**
+* It runs **only when the event happens** (like a click)
+
+---
+
+### 🔥 Blocking the Main Thread?
+
+JavaScript is **single-threaded** → only **one task** runs at a time.
+
+If a function takes **too long** to finish (e.g. a `while(true)`), it blocks:
+
+* UI won’t update
+* No other code runs
+* **User interaction freezes**
+
+```js
+function longTask() {
+  let i = 0;
+  while (i < 999999999) {
+    i++;
+  }
+  console.log("Done");
+}
+```
+
+✅ To avoid blocking, we use:
+
+* **Callbacks**
+* **setTimeout**
+* **Promises / async-await**
+
+---
+
+### ✅ Advantages of Callbacks:
+
+| Advantage   | Meaning                                |
+| ----------- | -------------------------------------- |
+| Async Code  | Don't block the main thread            |
+| Reusability | Logic separated into smaller functions |
+| Control     | Decide when to run the function        |
+
+---
+
+## 🧪 Want a Mini Task?
+
+Try this:
+
+```js
+function askUser(name, callback) {
+  console.log("Hi", name);
+  callback();
+}
+
+askUser("Shushanth", function () {
+  console.log("Welcome to React course!");
+});
+```
+
+---
+
+## ⚙️ JavaScript is:
+
+* **Single-threaded** (can run only one thing at a time)
+* **Synchronous** by default
+* But can behave **asynchronously** with help of:
+
+  * **Web APIs**
+  * **Callback Queue**
+  * **Microtask Queue**
+  * **Event Loop**
+
+---
+
+## 🚀 Example First:
+
+```js
+console.log("Start");
+
+setTimeout(() => {
+  console.log("Timeout");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("Promise");
+});
+
+console.log("End");
+```
+
+---
+
+### 🧠 Output:
+
+```
+Start
+End
+Promise
+Timeout
+```
+
+---
+
+## 🔍 What Just Happened?
+
+| Step                    | Explanation                                                                         |
+| ----------------------- | ----------------------------------------------------------------------------------- |
+| `console.log("Start")`  | Runs immediately                                                                    |
+| `setTimeout(...)`       | Sent to **Web APIs** (browser timer), callback goes to **Callback Queue** after 0ms |
+| `Promise.then(...)`     | Goes to **Microtask Queue**                                                         |
+| `console.log("End")`    | Runs immediately                                                                    |
+| After main thread empty | Microtask Queue is processed → logs `Promise`                                       |
+| Then                    | Callback Queue runs → logs `Timeout`                                                |
+
+---
+
+## 🔁 The Event Loop's Job:
+
+👉 **Keep checking:**
+
+* Is **Call Stack** empty?
+* If yes, first run tasks in **Microtask Queue** (e.g., Promises).
+* Then run tasks in **Callback Queue** (e.g., `setTimeout`, `click events`, etc.)
+
+---
+
+## 📦 Web APIs (from browser):
+
+* `setTimeout`
+* `setInterval`
+* `fetch`
+* `DOM Events` (click, scroll)
+
+> These are not part of JS itself but provided by the browser.
+
+---
+
+### 🧠 Real Use of Async JS:
+
+* Delay something (`setTimeout`)
+* Repeat action (`setInterval`)
+* Fetch data from servers (`fetch`)
+* Handle user input/events
+
+---
+
+## ✅ Summary:
+
+| Term                | What it Does                            |
+| ------------------- | --------------------------------------- |
+| **Call Stack**      | Executes code line by line              |
+| **Web APIs**        | Handles async work (timer, fetch)       |
+| **Callback Queue**  | Stores `setTimeout`, DOM callbacks      |
+| **Microtask Queue** | Stores `Promise.then`, `queueMicrotask` |
+| **Event Loop**      | Coordinates the above queues            |
+
+---
