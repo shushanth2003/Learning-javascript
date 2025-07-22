@@ -1112,3 +1112,292 @@ Timeout
 | **Event Loop**      | Coordinates the above queues            |
 
 ---
+
+## ❓ Why “Trust Issues” with `setTimeout()`?
+
+Because:
+
+> **`setTimeout(callback, delay)` does *not* guarantee** that the callback will run *exactly after that delay*.
+> It only means: “run *after at least* that much time — when the call stack is empty.”
+
+---
+
+## 🧠 Important Points:
+
+1. ✅ `setTimeout(..., 1000)` = **run after minimum 1 second**
+   ❌ Not exactly after 1 second
+
+2. ✅ If JS is busy (e.g., long loop), the **callback waits**
+
+---
+
+### 🧪 Example:
+
+```js
+console.log("Start");
+
+setTimeout(() => {
+  console.log("Timeout");
+}, 0);
+
+for (let i = 0; i < 1e9; i++) {} // a long loop
+
+console.log("End");
+```
+
+### 🧾 Output:
+
+```
+Start
+End
+Timeout
+```
+
+Even though `setTimeout(..., 0)` is used, the **loop blocked** the call stack. So the **callback was delayed**.
+
+---
+
+## 🧰 Behind the Scenes
+
+| Part             | Role                                                   |
+| ---------------- | ------------------------------------------------------ |
+| **setTimeout()** | Registers a callback with the browser timer            |
+| **JS Engine**    | Adds callback to **Callback Queue** *after* delay      |
+| **Event Loop**   | Waits for Call Stack to be empty, then pushes callback |
+
+If the call stack is busy, even a 0ms timeout will wait.
+
+---
+
+## 🔥 Famous Interview Question:
+
+```js
+console.log("1");
+
+setTimeout(() => {
+  console.log("2");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("3");
+});
+
+console.log("4");
+```
+
+**Output:**
+
+```
+1
+4
+3
+2
+```
+
+### ✅ Why?
+
+* `setTimeout(..., 0)` → goes to **Callback Queue**
+* `Promise.then(...)` → goes to **Microtask Queue** (runs first)
+
+---
+
+## ✅ Summary (Trust Issues):
+
+| Myth                                  | Truth                                           |
+| ------------------------------------- | ----------------------------------------------- |
+| `setTimeout(..., 0)` runs immediately | ❌ No. It waits for call stack to clear          |
+| Delay is exact                        | ❌ No. It’s **minimum delay**, not guaranteed    |
+| Callback is prioritized               | ❌ No. **Microtasks** (e.g., Promises) run first |
+
+---
+
+## ✅ What Are Higher-Order Functions (HOFs)?
+
+A **Higher-Order Function** is a function that:
+
+1. **Takes another function as an argument**, or
+2. **Returns another function as a result**
+
+🔁 In short: **Functions that work with other functions**.
+
+---
+
+### 💡 Examples:
+
+#### 1. Function takes another function:
+
+```js
+function greet(callback) {
+  callback();
+}
+
+greet(() => console.log("Hello Shushanth!"));
+```
+
+#### 2. Function returns another function:
+
+```js
+function multiplier(x) {
+  return function(y) {
+    return x * y;
+  };
+}
+
+const double = multiplier(2);
+console.log(double(5)); // 10
+```
+
+---
+
+## ✅ Why Are Functions Like This Possible?
+
+Because in JavaScript, **functions are first-class citizens** —
+You can treat them like **values**, assign them to variables, pass them around, and return them.
+
+---
+
+## 💥 Common Higher-Order Functions in JavaScript:
+
+| Function     | What it does                       |
+| ------------ | ---------------------------------- |
+| `.map()`     | Transforms each item in an array   |
+| `.filter()`  | Filters items based on a condition |
+| `.reduce()`  | Reduces array to a single value    |
+| `.forEach()` | Iterates over an array             |
+
+---
+
+### 🧪 Example of `.map()`:
+
+```js
+const numbers = [1, 2, 3];
+
+const doubled = numbers.map(num => num * 2);
+
+console.log(doubled); // [2, 4, 6]
+```
+
+---
+
+## 🧰 Bonus: Polyfill for `map()`
+
+Let's build our own version of `.map()`:
+
+```js
+Array.prototype.myMap = function(callback) {
+  const result = [];
+  for (let i = 0; i < this.length; i++) {
+    result.push(callback(this[i], i, this));
+  }
+  return result;
+};
+
+const nums = [1, 2, 3];
+const squared = nums.myMap(x => x * x);
+
+console.log(squared); // [1, 4, 9]
+```
+
+---
+
+## ✅ Functional Programming in JS
+
+Functional programming focuses on:
+
+* Pure functions (no side effects)
+* Immutability (not changing the original data)
+* Reusability
+* Composition (functions calling functions)
+
+---
+
+### 🧠 Summary
+
+| Concept                | Meaning                                          |
+| ---------------------- | ------------------------------------------------ |
+| Higher-Order Function  | Takes or returns another function                |
+| First-Class Function   | Can be passed around like data                   |
+| Functional Programming | Programming style using pure, reusable functions |
+
+---
+### 🔥 `map()`, `filter()`, and `reduce()`
+
+With short & sweet theory + code examples ✅
+
+---
+
+## 🧭 1. `map()` – *Transform each item in an array*
+
+### ✅ Use when: You want to **change every item** in an array
+
+```js
+const nums = [1, 2, 3];
+
+const doubled = nums.map(num => num * 2);
+
+console.log(doubled); // [2, 4, 6]
+```
+
+➡️ It returns a **new array**, doesn't modify the original one.
+
+---
+
+## 🧼 2. `filter()` – *Keep only items that match a condition*
+
+### ✅ Use when: You want to **remove some items**
+
+```js
+const nums = [1, 2, 3, 4, 5];
+
+const even = nums.filter(num => num % 2 === 0);
+
+console.log(even); // [2, 4]
+```
+
+➡️ Only returns items that pass the condition.
+
+---
+
+## 🧮 3. `reduce()` – *Turn array into a single value*
+
+### ✅ Use when: You want to **accumulate** or **sum up**
+
+```js
+const nums = [1, 2, 3, 4];
+
+const sum = nums.reduce((acc, curr) => acc + curr, 0);
+
+console.log(sum); // 10
+```
+
+* `acc` = accumulator (stores total)
+* `curr` = current item
+* `0` = initial value
+
+---
+
+## 🧪 Bonus: Combine them!
+
+```js
+const numbers = [1, 2, 3, 4, 5, 6];
+
+const result = numbers
+  .filter(num => num % 2 === 0)     // [2, 4, 6]
+  .map(num => num * 2)              // [4, 8, 12]
+  .reduce((acc, curr) => acc + curr, 0); // 24
+
+console.log(result); // 24
+```
+
+---
+
+## 📝 Summary Table
+
+| Function   | Purpose                 | Returns      |
+| ---------- | ----------------------- | ------------ |
+| `map()`    | Transform items         | New array    |
+| `filter()` | Filter items            | New array    |
+| `reduce()` | Combine to single value | Single value |
+
+---
+
