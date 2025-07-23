@@ -1714,3 +1714,139 @@ console.log(add(10, 5)); // 15
 * Module variables are **scoped** (not global).
 
 ---
+
+## 📡 What is AJAX?
+
+**AJAX** = **A**synchronous **J**avaScript **A**nd **X**ML
+👉 It's a technique to send/receive **data from a server** without reloading the page.
+
+Earlier we used:
+
+* `XMLHttpRequest` (old way)
+* Now we use `Fetch API` (modern way)
+
+---
+
+## 🚀 What is Fetch API?
+
+`fetch()` is a **built-in function** in JavaScript to **make HTTP requests**.
+
+> It's Promise-based and easier than `XMLHttpRequest`.
+
+---
+
+## ✅ Basic Syntax:
+
+```js
+fetch(url)
+  .then(response => response.json()) // converts JSON string to JS object
+  .then(data => console.log(data))
+  .catch(error => console.log("Error:", error));
+```
+
+---
+
+## 📦 Example:
+
+```js
+fetch("https://jsonplaceholder.typicode.com/posts/1")
+  .then(response => response.json())
+  .then(post => {
+    console.log("Title:", post.title);
+  })
+  .catch(err => console.error("Failed to fetch:", err));
+```
+
+---
+
+## ✏️ Using `async/await` (cleaner):
+
+```js
+async function getPost() {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+    const post = await response.json();
+    console.log("Title:", post.title);
+  } catch (err) {
+    console.log("Error fetching data:", err);
+  }
+}
+
+getPost();
+```
+
+---
+
+## 📝 Notes:
+
+* `.json()` converts the response into a JavaScript object
+* Can also use `.text()`, `.blob()`, etc. depending on response type
+* Works well for `GET`, `POST`, `PUT`, `DELETE` requests
+
+---
+
+## 🗃️ What are LocalStorage & SessionStorage?
+
+They are both **Web Storage APIs** used to store **key-value** data in the browser.
+
+| Feature       | `localStorage`          | `sessionStorage`        |
+| ------------- | ----------------------- | ----------------------- |
+| Lifetime      | Until manually deleted  | Until tab is closed     |
+| Accessible in | All tabs of same origin | Only in the current tab |
+| Storage Limit | \~5–10 MB               | \~5 MB                  |
+| Persistent?   | ✅ Yes                   | ❌ No                    |
+
+---
+
+## 🧪 Syntax & Usage
+
+### ✅ `localStorage`
+
+```js
+// Set item
+localStorage.setItem("username", "shushanth");
+
+// Get item
+let name = localStorage.getItem("username");
+
+// Remove item
+localStorage.removeItem("username");
+
+// Clear all
+localStorage.clear();
+```
+
+---
+
+### ✅ `sessionStorage`
+
+```js
+// Set item
+sessionStorage.setItem("token", "abc123");
+
+// Get item
+let token = sessionStorage.getItem("token");
+
+// Remove item
+sessionStorage.removeItem("token");
+
+// Clear all
+sessionStorage.clear();
+```
+
+---
+
+## 📌 Notes:
+
+* Only **strings** can be stored.
+* To store objects, convert with `JSON.stringify()` and `JSON.parse()`:
+
+```js
+let user = { name: "Shushanth", age: 21 };
+localStorage.setItem("user", JSON.stringify(user));
+
+let data = JSON.parse(localStorage.getItem("user"));
+console.log(data.name); // Shushanth
+```
+
+---
