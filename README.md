@@ -1597,3 +1597,120 @@ myPromise
 
 ---
 
+## ✅ `Promise.all()`
+
+### 🧠 **Theory:**
+
+* `Promise.all()` takes **multiple promises** as an array.
+* It **waits for all promises to resolve**.
+* If **any one fails**, the whole thing fails and goes to `catch`.
+
+### ✅ Use Case:
+
+→ When **all async tasks must succeed** (like loading user, posts, and settings together).
+
+### 📦 Syntax:
+
+```javascript
+Promise.all([promise1, promise2, promise3])
+  .then((results) => {
+    console.log(results); // Array of all resolved values
+  })
+  .catch((error) => {
+    console.log("One promise failed:", error);
+  });
+```
+
+---
+
+## ✅ `Promise.race()`
+
+### 🧠 **Theory:**
+
+* `Promise.race()` also takes an array of promises.
+* It returns **the result of the first settled promise** (resolved or rejected).
+* It’s like a **race**, only the **fastest wins**.
+
+### ✅ Use Case:
+
+→ Useful for **timeouts**, **speed checks**, or picking the **fastest API**.
+
+### 📦 Syntax:
+
+```javascript
+Promise.race([promise1, promise2])
+  .then((result) => {
+    console.log("First resolved:", result);
+  })
+  .catch((error) => {
+    console.log("First rejected:", error);
+  });
+```
+
+---
+
+## ✅ What are JavaScript Modules?
+
+**Modules** are files that contain reusable code — variables, functions, classes, etc.
+They help you **split your code into smaller, manageable parts**.
+
+> Think of modules as **"files you can import from or export to"**.
+
+---
+
+## 🧩 Why use Modules?
+
+* Code reusability 🧠
+* Cleaner structure 🧼
+* Separation of concerns 🚀
+* Easy to debug and maintain 🛠️
+
+---
+
+## 📤 Exporting from a Module
+
+### 👉 Named Export:
+
+```js
+// utils.js
+export const add = (a, b) => a + b;
+export const sub = (a, b) => a - b;
+```
+
+### 👉 Default Export:
+
+```js
+// greet.js
+export default function greet(name) {
+  console.log("Hello", name);
+}
+```
+
+---
+
+## 📥 Importing in Another File
+
+```js
+// main.js
+import greet from './greet.js';
+import { add, sub } from './utils.js';
+
+greet("Shushanth");
+console.log(add(10, 5)); // 15
+```
+
+---
+
+## 📌 Important Notes
+
+* Always use `.js` in file paths (in browser-based ES Modules).
+* Use `type="module"` in HTML:
+
+```html
+<script type="module" src="main.js"></script>
+```
+
+* Module code runs in **strict mode** by default.
+* Module variables are **scoped** (not global).
+
+---
